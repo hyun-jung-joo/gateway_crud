@@ -1,6 +1,10 @@
 sap.ui.define(
-    ["sap/ui/core/mvc/Controller", "sap/ui/model/json/JSONModel"],
-    (Controller, JSONModel) => {
+    [
+        "sap/ui/core/mvc/Controller",
+        "sap/ui/model/json/JSONModel",
+        "sap/m/MessageBox",
+    ],
+    (Controller, JSONModel, MessageBox) => {
         "use strict";
 
         return Controller.extend("sync.c22.gateway.crud.controller.Main", {
@@ -72,9 +76,36 @@ sap.ui.define(
                 });
                 this.onClose();
             },
+
             onClose() {
                 var oDialog = this.getView().byId("idEditDialog");
                 oDialog.close();
+            },
+
+            onDelete(oEvent) {
+                var oButton = oEvent.getSource();
+                var oContext = oButton.getBindingContext(); // 특정 경로 데이터에 접근할 수 있음
+                var sPath = oContext.getPath(); // 현재 어떤 경로인지
+                var sCarrid = oContext.getProperty("Carrid"); // 현재의 Carrid 가져옴
+
+                var oModel = this.getView().getModel(); // oData
+
+                // 삭제 구현
+                oModel.remove(
+                    sPath, // 내가 클릭한 버튼의 모델 경로
+                    {
+                        success() {
+                            MessageBox.success(
+                                `Carrier ${sCarrid}가 삭제되었습니다.`
+                            );
+                        },
+                        error(oError) {
+                            MessageBox.error(
+                                `Carrier ${sCarrid} 삭제를 실패했습니다.`
+                            );
+                        },
+                    }
+                );
             },
         });
     }

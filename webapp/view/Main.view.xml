@@ -73,6 +73,20 @@
                         />
                     </t:template>
                 </t:Column>
+
+                <!-- 삭제 버튼 -->
+                <t:Column>
+                    <t:label>
+                        <Text text="삭제" />
+                    </t:label>
+                    <t:template>
+                        <Button
+                            icon="sap-icon://delete"
+                            press="onDelete"
+                            type="Transparent"
+                        />
+                    </t:template>
+                </t:Column>
             </t:columns>
         </t:Table>
     </Page>
